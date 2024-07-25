@@ -21,6 +21,10 @@ public class Contact {
     @ManyToMany(mappedBy = "contacts")
     private Set<Group> groups = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
+
     public Contact() {
     }
 

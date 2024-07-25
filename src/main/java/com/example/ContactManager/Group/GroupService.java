@@ -4,10 +4,12 @@ package com.example.ContactManager.Group;
 import com.example.ContactManager.Contact.ContactRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
 
+@Service
 public class GroupService {
     private final GroupRepository groupRepository;
 

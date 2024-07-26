@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class ContactService {
@@ -22,6 +23,11 @@ public class ContactService {
 
     public List<Contact> getContacts(){
         return contactRepository.findAll();
+    }
+
+    public Contact getContactById(Long contactId){
+        Optional<Contact> contact = contactRepository.findById(contactId);
+        return contact.orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + " could not be found."));
     }
 
     public void addNewContact(Contact contact){

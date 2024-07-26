@@ -1,5 +1,6 @@
 package com.example.ContactManager.Contact;
 
+import com.example.ContactManager.Priority.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,5 +35,13 @@ public class ContactController {
     public void updateContact(
             @PathVariable("contactId") Long contactId, @RequestParam(required=false) String name) {
         contactService.updateContact(contactId,name);
+    }
+
+    @PutMapping("/{contactId}/contact/{groupId}")
+    Priority assignContactToGroup(
+            @PathVariable Long contactId,
+            @PathVariable Long groupId){
+        contactService.assignGroupToContact(contactId, groupId);
+        return null;
     }
 }

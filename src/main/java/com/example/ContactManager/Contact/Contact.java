@@ -1,7 +1,7 @@
 package com.example.ContactManager.Contact;
 
 import com.example.ContactManager.Group.Group;
-import com.example.ContactManager.Location.Location;
+import com.example.ContactManager.Priority.Priority;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,8 +22,8 @@ public class Contact {
     private Set<Group> groups = new HashSet<>();
 
     @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
 
     public Contact() {
     }

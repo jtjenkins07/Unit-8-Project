@@ -61,6 +61,9 @@ public class Group {
         this.contacts = contacts;
     }
 
+    public void assignContact(Contact contact){
+        contacts.add(contact);
+    }
     @Override
     public String toString() {
         return "Group{" +

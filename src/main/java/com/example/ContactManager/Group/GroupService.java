@@ -1,6 +1,7 @@
 package com.example.ContactManager.Group;
 
 
+import com.example.ContactManager.Contact.Contact;
 import com.example.ContactManager.Contact.ContactRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -20,6 +22,11 @@ public class GroupService {
 
     public List<Group> getGroups(){
         return groupRepository.findAll();
+    }
+
+    public Group getGroupById(Long groupId){
+        Optional<Group> group = groupRepository.findById(groupId);
+        return group.orElseThrow(() -> new IllegalStateException("Group ID: " + groupId + " could not be found."));
     }
 
     public void addNewGroup(Group group){

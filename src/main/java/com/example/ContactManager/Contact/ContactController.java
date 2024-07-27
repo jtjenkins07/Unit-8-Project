@@ -39,15 +39,19 @@ public class ContactController {
 
     @PutMapping(path = "{contactId}")
     public void updateContact(
-            @PathVariable("contactId") Long contactId, @RequestParam(required=false) String name) {
-        contactService.updateContact(contactId,name);
+            @PathVariable("contactId") Long contactId,
+            @RequestParam(required=false) String name,
+            @RequestParam(required=false) String phone,
+            @RequestParam(required=false) String email)
+    {
+        contactService.updateContact(contactId,name, phone, email);
     }
 
     @PutMapping("/{contactId}/contact/{groupId}")
     Priority assignContactToGroup(
             @PathVariable Long contactId,
             @PathVariable Long groupId){
-        contactService.assignGroupToContact(contactId, groupId);
+        contactService.assignPriorityToContact(contactId, groupId);
         return null;
     }
 }

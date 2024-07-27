@@ -2,6 +2,8 @@ package com.example.ContactManager.Contact;
 
 import com.example.ContactManager.Group.Group;
 import com.example.ContactManager.Group.GroupRepository;
+import com.example.ContactManager.Priority.Priority;
+import com.example.ContactManager.Priority.PriorityRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class ContactService {
         this.contactRepository = contactRepository;}
 
     @Autowired
-    GroupRepository groupRepository;
+    PriorityRepository priorityRepository;
 
     public List<Contact> getContacts(){
         return contactRepository.findAll();
@@ -43,16 +45,25 @@ public class ContactService {
     }
 
     @Transactional
-    public void updateContact(Long contactId, String name){
+    public void updateContact(Long contactId, String name, String phone, String email){
         Contact contact = contactRepository.findById(contactId).orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + "does not exist."));
 
-        if(name != null && !name.isEmpty() && !Objects.equals(contact.getName(), name)){
+        if(name != null && !name.isEmpty()){
             contact.setName(name);
         }
+        if(phone != null && !phone.isEmpty()){
+            contact.setPhone(phone);
+        }
+        if(email != null && !email.isEmpty()){
+            contact.setEmail(email);
+        }
+        contactRepository.save(contact);
     }
 
-    public void assignGroupToContact(Long contactId, Long groupId){
+    public void assignPriorityToContact(Long contactId, Long priorityId){
         Contact contact = contactRepository.findById(contactId).orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + "does not exist."));
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new IllegalStateException("Group ID: " + groupId + "does not exist."));
+        Priority priority = priorityRepository.findById(priorityId).orElseThrow(() -> new IllegalStateException("Priority ID: " + priorityId + "does not exist."));
+        contact.assignPriority(priority);
+        contactRepository.save(contact);
     }
 }

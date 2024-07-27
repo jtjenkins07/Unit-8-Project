@@ -1,10 +1,12 @@
 package com.example.ContactManager.Priority;
 
+import com.example.ContactManager.Contact.Contact;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PriorityService {
@@ -17,6 +19,11 @@ public class PriorityService {
 
     public List<Priority> getPriority(){
         return priorityRepository.findAll();
+    }
+
+    public Priority getPriorityById(Long priorityId){
+        Optional<Priority> priority = priorityRepository.findById(priorityId);
+        return priority.orElseThrow(() -> new IllegalStateException("Priority ID: " + priorityId + " could not be found."));
     }
 
     public void addNewPriority(Priority priority){

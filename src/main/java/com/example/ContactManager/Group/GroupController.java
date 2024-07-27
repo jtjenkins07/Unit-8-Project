@@ -1,6 +1,7 @@
 package com.example.ContactManager.Group;
 
 
+import com.example.ContactManager.Contact.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,11 @@ public class GroupController {
     @GetMapping
     public List<Group> getGroups(){
         return groupService.getGroups();
+    }
+
+    @GetMapping("/{groupId}")
+    public Group getGroupById(@PathVariable("groupId") Long groupId){
+        return groupService.getGroupById(groupId);
     }
 
     @PostMapping

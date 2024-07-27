@@ -1,6 +1,7 @@
 package com.example.ContactManager.Priority;
 
 
+import com.example.ContactManager.Group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,12 @@ public class PriorityController {
     @GetMapping
     public List<Priority> getPriority(){
         return priorityService.getPriority();
+    }
+
+    @GetMapping("/{priorityId}")
+    public Priority getPriorityById(@PathVariable("priorityId") Long priorityId) {
+        return priorityService.getPriorityById(priorityId);
+
     }
 
     @PostMapping

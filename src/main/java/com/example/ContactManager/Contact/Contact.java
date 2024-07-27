@@ -2,6 +2,7 @@ package com.example.ContactManager.Contact;
 
 import com.example.ContactManager.Group.Group;
 import com.example.ContactManager.Priority.Priority;
+import com.example.ContactManager.Priority.PriorityRepository;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -71,6 +72,14 @@ public class Contact {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<Group> getGroups(){
+        return groups;
+    }
+
+    public void assignPriority(Priority priority){
+        this.priority = priority;
     }
 
     @Override

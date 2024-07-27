@@ -45,19 +45,24 @@ public class ContactService {
     }
 
     @Transactional
-    public void updateContact(Long contactId, String name, String phone, String email){
-        Contact contact = contactRepository.findById(contactId).orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + "does not exist."));
+    public Contact updateContact(Long contactId, Contact contact) {
+        Contact existingContact = contactRepository.findById(contactId)
+                .orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + " does not exist."));
 
-        if(name != null && !name.isEmpty()){
-            contact.setName(name);
+        if (contact.getName() != null && !contact.getName().isEmpty() && !Objects.equals(existingContact.getName(), contact.getName())) {
+            existingContact.setName(contact.getName());
         }
-        if(phone != null && !phone.isEmpty()){
-            contact.setPhone(phone);
+
+        if (contact.getPhone() != null && !contact.getPhone().isEmpty() && !Objects.equals(existingContact.getPhone(), contact.getPhone())) {
+            existingContact.setPhone(contact.getPhone());
         }
-        if(email != null && !email.isEmpty()){
-            contact.setEmail(email);
+
+        if (contact.getEmail() != null && !contact.getEmail().isEmpty() && !Objects.equals(existingContact.getEmail(), contact.getEmail())) {
+            existingContact.setEmail(contact.getEmail());
         }
-        contactRepository.save(contact);
+
+        // Save the updated contact
+        return contactRepository.save(existingContact);
     }
 
     public void assignPriorityToContact(Long contactId, Long priorityId){

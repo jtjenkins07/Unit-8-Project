@@ -3,6 +3,7 @@ package com.example.ContactManager.Priority;
 
 import com.example.ContactManager.Group.Group;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,10 +39,11 @@ public class PriorityController {
         priorityService.deletePriority(priorityId);
     }
 
-    @PutMapping(path = "{priorityId}")
-    public void updatePriority(
+    @PutMapping("/{priorityId}")
+    public ResponseEntity<Priority> updatePriority(
             @PathVariable("priorityId") Long priorityId,
-            @RequestParam(required = false) String name){
-        priorityService.updatePriority(priorityId, name);
+            @RequestBody Priority priority) {
+        Priority updatedPriority = priorityService.updatePriority(priorityId, priority);
+        return ResponseEntity.ok(updatedPriority);
     }
 }

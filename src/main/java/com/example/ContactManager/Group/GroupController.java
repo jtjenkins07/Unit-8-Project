@@ -3,6 +3,7 @@ package com.example.ContactManager.Group;
 
 import com.example.ContactManager.Contact.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,11 +38,12 @@ public class GroupController {
         groupService.deleteGroup(groupId);
     }
 
-    @PutMapping(path = "{groupId}")
-    public void updateGroup(
+    @PutMapping("/{groupId}")
+    public ResponseEntity<Group> updateGroup(
             @PathVariable("groupId") Long groupId,
-            @RequestParam(required = false) String name)
-    {
-        groupService.updateGroup(groupId, name);
+            @RequestBody Group group) {
+        Group updatedGroup = groupService.updateGroup(groupId, group);
+        return ResponseEntity.ok(updatedGroup);
     }
+
 }

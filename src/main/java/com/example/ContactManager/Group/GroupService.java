@@ -42,11 +42,14 @@ public class GroupService {
     }
 
     @Transactional
-    public void updateGroup(Long groupId, String name){
-        Group group = groupRepository.findById(groupId).orElseThrow(() -> new IllegalStateException("Group Id: " + groupId + "does not exist"));
+    public Group updateGroup(Long groupId, Group group) {
+        Group existingGroup = groupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalStateException("Group ID: " + groupId + " does not exist."));
 
-        if (name != null && !name.isEmpty() && !Objects.equals(group.getName(), name)){
-            group.setName(name);
+        if (group.getName() != null && !group.getName().isEmpty() && !Objects.equals(existingGroup.getName(), group.getName())) {
+            existingGroup.setName(group.getName());
         }
+        return groupRepository.save(existingGroup);
     }
+
 }

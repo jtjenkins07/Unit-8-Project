@@ -2,6 +2,7 @@ package com.example.ContactManager.Contact;
 
 import com.example.ContactManager.Priority.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,15 +38,14 @@ public class ContactController {
         contactService.deleteContact(contactId);
     }
 
-    @PutMapping(path = "{contactId}")
-    public void updateContact(
+    @PutMapping("/{contactId}")
+    public ResponseEntity<Contact> updateContact(
             @PathVariable("contactId") Long contactId,
-            @RequestParam(required=false) String name,
-            @RequestParam(required=false) String phone,
-            @RequestParam(required=false) String email)
-    {
-        contactService.updateContact(contactId,name, phone, email);
+            @RequestBody Contact contact) {
+        Contact updatedContact = contactService.updateContact(contactId, contact);
+        return ResponseEntity.ok(updatedContact);
     }
+
 
     @PutMapping("/{contactId}/contact/{groupId}")
     Priority assignContactToGroup(

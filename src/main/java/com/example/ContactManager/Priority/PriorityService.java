@@ -1,11 +1,13 @@
 package com.example.ContactManager.Priority;
 
 import com.example.ContactManager.Contact.Contact;
+import com.example.ContactManager.Group.Group;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -39,7 +41,15 @@ public class PriorityService {
     }
 
     @Transactional
-    public void updatePriority(Long priorityId, String name){
-        Priority priority = priorityRepository.findById(priorityId).orElseThrow(() -> new IllegalStateException("Priority ID: " + priorityId + "does not exist."));
+    public Priority updatePriority(Long priorityId, Priority priority) {
+        Priority existingPriority = priorityRepository.findById(priorityId)
+                .orElseThrow(() -> new IllegalStateException("Priority ID: " + priorityId + " does not exist."));
+
+        if (priority.getName() != null && !priority.getName().isEmpty() && !Objects.equals(existingPriority.getName(), priority.getName())) {
+            existingPriority.setName(priority.getName());
+        }
+        return priorityRepository.save(existingPriority);
     }
+
+
 }

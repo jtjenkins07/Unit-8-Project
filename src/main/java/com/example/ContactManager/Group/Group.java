@@ -1,17 +1,25 @@
 package com.example.ContactManager.Group;
 
 import com.example.ContactManager.Contact.Contact;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Access(AccessType.FIELD)
 @Table(name= "groups")
 public class Group {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name="group_sequence",
+            sequenceName = "group_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "group_sequence"
+    )
     private Long id;
     private String name;
 

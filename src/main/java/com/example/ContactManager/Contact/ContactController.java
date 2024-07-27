@@ -47,11 +47,11 @@ public class ContactController {
     }
 
 
-    @PutMapping("/{contactId}/contact/{groupId}")
-    Priority assignContactToGroup(
+    @PutMapping("/{contactId}/contact/{priorityId}")
+    Priority assignPriorityToContact(
             @PathVariable Long contactId,
-            @PathVariable Long groupId){
-        contactService.assignPriorityToContact(contactId, groupId);
+            @PathVariable Long priorityId){
+        contactService.assignPriorityToContact(contactId, priorityId);
         return null;
     }
 }

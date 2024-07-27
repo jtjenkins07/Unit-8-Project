@@ -3,6 +3,7 @@ package com.example.ContactManager.Group;
 
 import com.example.ContactManager.Contact.Contact;
 import com.example.ContactManager.Contact.ContactRepository;
+import com.example.ContactManager.Priority.Priority;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,9 @@ public class GroupService {
     public GroupService(GroupRepository groupRepository){
         this.groupRepository = groupRepository;
     }
+
+    @Autowired
+    ContactRepository contactRepository;
 
     public List<Group> getGroups(){
         return groupRepository.findAll();
@@ -52,4 +56,13 @@ public class GroupService {
         return groupRepository.save(existingGroup);
     }
 
+    public void assignGroupToContact(Long contactId, Long groupId){
+        Contact contact = contactRepository.findById(contactId).orElseThrow(() -> new IllegalStateException("Contact ID: " + contactId + "does not exist."));
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new IllegalStateException("Group ID: " + groupId + "does not exist."));
+        group.assignContact(contact);
+        contactRepository.save(contact);
+    }
 }
+
+
+

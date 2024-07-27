@@ -2,6 +2,7 @@ package com.example.ContactManager.Group;
 
 
 import com.example.ContactManager.Contact.Contact;
+import com.example.ContactManager.Priority.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,5 +46,13 @@ public class GroupController {
         Group updatedGroup = groupService.updateGroup(groupId, group);
         return ResponseEntity.ok(updatedGroup);
     }
+    @PutMapping("/{contactId}/contact/{groupId}")
+    Group assignGroupToContact(
+            @PathVariable Long contactId,
+            @PathVariable Long groupId){
+        groupService.assignGroupToContact(contactId, groupId);
+        return null;
+    }
+
 
 }

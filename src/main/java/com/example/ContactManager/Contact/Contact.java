@@ -3,27 +3,36 @@ package com.example.ContactManager.Contact;
 import com.example.ContactManager.Group.Group;
 import com.example.ContactManager.Priority.Priority;
 import com.example.ContactManager.Priority.PriorityRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Access(AccessType.FIELD)
 @Table(name = "contacts")
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name="contact_sequence",
+            sequenceName = "contact_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "contact_sequence"
+    )
     private Long id;
     private String name;
     private String phone;
     private String email;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "contacts")
     private Set<Group> groups = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "priority_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "priority_id", referencedColumnName = "id")
     private Priority priority;
 
     public Contact() {
